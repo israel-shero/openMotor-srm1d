@@ -1,4 +1,4 @@
-from PyQt6.QtWidgets import QDialog, QMessageBox, QApplication
+from PyQt6.QtWidgets import QDialog, QMessageBox, QApplication, QScrollArea
 from PyQt6.QtCore import pyqtSignal
 from ..helpers import FLAGS_NO_ICON
 from PyQt6.QtCore import Qt
@@ -17,6 +17,17 @@ class PropellantMenu(QDialog):
         QDialog.__init__(self)
         self.ui = Ui_PropellantDialog()
         self.ui.setupUi(self)
+
+        # Propellant tabs contain pressure, transport, and thermo fields.
+        # Let the dialog itself scroll vertically instead of squeezing those
+        # spin boxes into the preview/content column.
+        self._propScroll = QScrollArea()
+        self._propScroll.setWidgetResizable(True)
+        self._propScroll.setFrameShape(QScrollArea.Shape.NoFrame)
+        self._propScroll.setWidget(self.ui.propEditor)
+        self.ui.horizontalLayout.replaceWidget(
+            self.ui.propEditor, self._propScroll)
+        self.ui.propEditor.setMinimumWidth(680)
 
         self.manager = manager
 

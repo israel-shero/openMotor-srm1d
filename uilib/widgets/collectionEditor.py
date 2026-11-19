@@ -23,6 +23,9 @@ class CollectionEditor(QWidget):
         self.layout().setSpacing(0)
 
         self.form = QFormLayout()
+        self.form.setContentsMargins(6, 6, 6, 6)
+        self.form.setVerticalSpacing(4)
+        self.form.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.ExpandingFieldsGrow)
         self.layout().addLayout(self.form)
 
         self.stats = QVBoxLayout()

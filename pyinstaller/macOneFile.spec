@@ -44,7 +44,7 @@ exe = EXE(pyz,
           a.scripts,
           [],
           exclude_binaries=True,
-          name='openMotor',
+          name='openMotor-SRM1D',
           debug=False,
           bootloader_ignore_signals=False,
           argv_emulation=True,
@@ -58,12 +58,15 @@ coll = COLLECT(exe,
               a.datas,
               strip=False,
               upx=True,
-              name='openMotor')
+              name='openMotor-SRM1D')
 app = BUNDLE(coll,
-             name='openMotor.app',
+             name='openMotor SRM 1D.app',
              icon='../resources/oMIconCycles.icns',
              version=appVersionStr,
              info_plist={
+              'CFBundleName': 'openMotor SRM 1D',
+              'CFBundleExecutable': 'openMotor-SRM1D',
+              'CFBundleDisplayName': 'openMotor SRM 1D',
               'NSHighResolutionCapable': True,
               'CFBundleDocumentTypes': [
                {
@@ -75,4 +78,4 @@ app = BUNDLE(coll,
                }
               ],
              },
-             bundle_identifier=None)
+             bundle_identifier='com.openmotor.srm1d')

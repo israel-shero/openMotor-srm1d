@@ -20,4 +20,4 @@ SRM1D_OPENMOTOR_PATH="$ROOT" \
     --clean --noconfirm \
     pyinstaller/macOneFile.spec
 
-echo "Built app: $ROOT/dist/openMotor.app"
+echo "Built app: $ROOT/dist/openMotor SRM 1D.app"
