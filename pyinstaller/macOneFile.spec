@@ -1,16 +1,35 @@
 # -*- mode: python -*-
 
-# Run with `pyinstaller --windowed --onedir`
+# Run with:
+#   OPENMOTOR_SRM1D_PATH=../../srm_1d \
+#   pyinstaller --windowed --clean --noconfirm pyinstaller/macOneFile.spec
+#
+# This spec bundles the srm_1d plugin, so the resulting app can run both
+# openMotor's quasi-steady solver and srm_1d's transient solver.
 
+from PyInstaller.utils.hooks import collect_submodules
 from uilib.fileIO import appVersionStr
+from pathlib import Path
+
+ROOT = Path(SPECPATH).resolve().parent
+SRM_ROOT = (ROOT.parent / 'srm_1d').resolve()
 
 block_cipher = None
 
-a = Analysis(['../main.py'],
-             pathex=['../'],
+a = Analysis([str(ROOT / 'scripts/run_openmotor_srm1d.py')],
+             pathex=[str(ROOT), str(SRM_ROOT)],
              binaries=[],
-             datas=[('../resources/oMFile256.icns', '.')],
-             hiddenimports=['pywt._extensions._cwt'],
+             datas=[
+                 (str(ROOT / 'resources/oMFile256.icns'), '.'),
+                 (str(SRM_ROOT / 'srm_1d/pyrogens'), 'srm_1d/pyrogens'),
+             ],
+             hiddenimports=(
+                 ['pywt._extensions._cwt',
+                  'srm_1d.srm1d_plugin',
+                  'srm_1d.openmotor_adapter',
+                  'srm_1d.station_viz']
+                 + collect_submodules('srm_1d')
+             ),
              hookspath=[],
              runtime_hooks=[],
              excludes=[],
@@ -18,7 +37,7 @@ a = Analysis(['../main.py'],
              win_private_assemblies=False,
              cipher=block_cipher,
              noarchive=False,
-             target_arch=['x86_64', 'arm64'])
+             target_arch=None)
 pyz = PYZ(a.pure, a.zipped_data,
              cipher=block_cipher)
 exe = EXE(pyz,
