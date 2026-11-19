@@ -1,5 +1,44 @@
 import unittest
 import motorlib.propellant
+from PyQt6.QtWidgets import QApplication, QWidget, QSizePolicy
+from uilib.widgets.propertyEditor import PropertyEditor
+
+
+class _UnitPreferences:
+    def getUnit(self, unit):
+        return unit
+
+
+class TestPropellantEditorLayout(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.app = QApplication.instance() or QApplication([])
+
+    def test_tabular_propellant_editor_keeps_controls_visible(self):
+        propellant = motorlib.propellant.Propellant({
+            'name': 'Layout Test',
+            'density': 1700,
+            'tabs': [{
+                'minPressure': 0,
+                'maxPressure': 7000000,
+                'a': 1e-5,
+                'n': 0.3,
+                'k': 1.2,
+                't': 2800,
+                'm': 23.67,
+            }],
+        })
+
+        prop = propellant.props['tabs']
+        parent = QWidget()
+        editor = PropertyEditor(parent, prop, _UnitPreferences())
+
+        self.assertGreaterEqual(editor.editor.minimumWidth(), 520)
+        self.assertGreaterEqual(editor.editor.minimumHeight(), 300)
+        self.assertEqual(
+            editor.editor.sizePolicy().horizontalPolicy(),
+            QSizePolicy.Policy.Expanding,
+        )
 
 class TestPropellantMethods(unittest.TestCase):
     def test_proper_propellant_ranges(self):

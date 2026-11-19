@@ -1,4 +1,4 @@
-from PyQt6.QtWidgets import QWidget
+from PyQt6.QtWidgets import QWidget, QSizePolicy
 from PyQt6.QtCore import pyqtSignal
 
 from motorlib.propellant import PropellantTab
@@ -13,6 +13,14 @@ class TabularEditor(QWidget):
         QWidget.__init__(self)
         self.ui = Ui_TabularEditor()
         self.ui.setupUi(self)
+        self.setSizePolicy(
+            QSizePolicy.Policy.Expanding,
+            QSizePolicy.Policy.Expanding,
+        )
+        self.ui.stackedWidget.setSizePolicy(
+            QSizePolicy.Policy.Expanding,
+            QSizePolicy.Policy.Expanding,
+        )
         self.preferences = None
         self.tabs = []
 

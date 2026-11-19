@@ -1,6 +1,7 @@
 import math
 
 from PyQt6.QtWidgets import QWidget, QVBoxLayout, QLineEdit, QCheckBox
+from PyQt6.QtWidgets import QSizePolicy
 from PyQt6.QtWidgets import QDoubleSpinBox, QSpinBox, QComboBox
 from PyQt6.QtCore import pyqtSignal, Qt
 
@@ -19,6 +20,10 @@ class PropertyEditor(QWidget):
         self.setLayout(QVBoxLayout())
         self.layout().setSpacing(0)
         self.layout().setContentsMargins(5, 5, 5, 5)
+        self.setSizePolicy(
+            QSizePolicy.Policy.Expanding,
+            QSizePolicy.Policy.Preferred,
+        )
         self.prop = prop
 
         if self.preferences is not None:
@@ -28,6 +33,11 @@ class PropertyEditor(QWidget):
 
         if isinstance(prop, motorlib.properties.FloatProperty):
             self.editor = QDoubleSpinBox()
+            self.editor.setMinimumWidth(140)
+            self.editor.setSizePolicy(
+                QSizePolicy.Policy.Expanding,
+                QSizePolicy.Policy.Fixed,
+            )
 
             self.editor.setSuffix(' {}'.format(self.dispUnit))
 
@@ -44,6 +54,11 @@ class PropertyEditor(QWidget):
 
         elif isinstance(prop, motorlib.properties.IntProperty):
             self.editor = QSpinBox()
+            self.editor.setMinimumWidth(140)
+            self.editor.setSizePolicy(
+                QSizePolicy.Policy.Expanding,
+                QSizePolicy.Policy.Fixed,
+            )
 
             convMin = motorlib.units.convert(self.prop.min, self.prop.unit, self.dispUnit)
             convMax = motorlib.units.convert(self.prop.max, self.prop.unit, self.dispUnit)
@@ -55,6 +70,11 @@ class PropertyEditor(QWidget):
 
         elif isinstance(prop, motorlib.properties.StringProperty):
             self.editor = QLineEdit()
+            self.editor.setMinimumWidth(180)
+            self.editor.setSizePolicy(
+                QSizePolicy.Policy.Expanding,
+                QSizePolicy.Policy.Fixed,
+            )
             self.editor.setText(self.prop.getValue())
             self.layout().addWidget(self.editor)
 
@@ -66,6 +86,11 @@ class PropertyEditor(QWidget):
 
         elif isinstance(prop, motorlib.properties.EnumProperty):
             self.editor = QComboBox()
+            self.editor.setMinimumWidth(140)
+            self.editor.setSizePolicy(
+                QSizePolicy.Policy.Expanding,
+                QSizePolicy.Policy.Fixed,
+            )
 
             self.editor.addItems(self.prop.values)
             self.editor.setCurrentText(self.prop.value)
@@ -84,6 +109,12 @@ class PropertyEditor(QWidget):
 
         elif isinstance(prop, motorlib.properties.TabularProperty):
             self.editor = TabularEditor()
+            self.editor.setMinimumWidth(520)
+            self.editor.setMinimumHeight(300)
+            self.editor.setSizePolicy(
+                QSizePolicy.Policy.Expanding,
+                QSizePolicy.Policy.Expanding,
+            )
 
             self.editor.setPreferences(self.preferences)
             for tab in prop.tabs:

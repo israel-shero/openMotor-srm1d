@@ -23,6 +23,11 @@ class CollectionEditor(QWidget):
         self.layout().setSpacing(0)
 
         self.form = QFormLayout()
+        self.form.setFieldGrowthPolicy(
+            QFormLayout.FieldGrowthPolicy.ExpandingFieldsGrow
+        )
+        self.form.setHorizontalSpacing(12)
+        self.form.setVerticalSpacing(4)
         self.layout().addLayout(self.form)
 
         self.stats = QVBoxLayout()
@@ -104,7 +109,7 @@ class CollectionEditor(QWidget):
             self.propertyEditors[prop] = PropertyEditor(self, obj.props[prop], self.preferences)
             self.propertyEditors[prop].valueChanged.connect(self.propertyUpdate)
             label = QLabel('{}:'.format(obj.props[prop].dispName))
-            label.setSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+            label.setSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Preferred)
             self.form.addRow(label, self.propertyEditors[prop])
 
     def cleanup(self):
