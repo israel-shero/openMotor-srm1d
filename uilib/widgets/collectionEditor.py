@@ -110,6 +110,7 @@ class CollectionEditor(QWidget):
             self.propertyEditors[prop].valueChanged.connect(self.propertyUpdate)
             label = QLabel('{}:'.format(obj.props[prop].dispName))
             label.setSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Preferred)
+            label.setWordWrap(True)
             self.form.addRow(label, self.propertyEditors[prop])
 
     def cleanup(self):

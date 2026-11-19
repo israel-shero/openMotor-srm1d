@@ -1,5 +1,9 @@
-from PyQt6.QtWidgets import QLabel, QComboBox, QHBoxLayout, QWidget
+from PyQt6.QtWidgets import (
+    QLabel, QComboBox, QHBoxLayout, QVBoxLayout, QWidget, QScrollArea,
+    QFormLayout, QLayout,
+)
 from PyQt6.QtWidgets import QCheckBox, QSizePolicy
+from PyQt6.QtCore import Qt
 from PyQt6.QtCore import pyqtSignal
 
 import motorlib.grain
@@ -66,6 +70,30 @@ class MotorEditor(CollectionEditor):
         self.nozzlePreview = NozzlePreviewWidget()
         self.nozzlePreview.hide()
         self.stats.addWidget(self.nozzlePreview)
+
+        self.form.setRowWrapPolicy(
+            QFormLayout.RowWrapPolicy.WrapLongRows)
+        layout = self.layout()
+        layout.takeAt(2)
+        layout.takeAt(2)
+        layout.takeAt(2)
+
+        self.editorContent = QWidget()
+        contentLayout = QVBoxLayout(self.editorContent)
+        contentLayout.setSizeConstraint(QLayout.SizeConstraint.SetMinAndMaxSize)
+        contentLayout.setContentsMargins(0, 0, 0, 0)
+        contentLayout.setSpacing(8)
+        contentLayout.addLayout(self.form)
+        contentLayout.addLayout(self.stats)
+        contentLayout.addStretch(1)
+
+        self.editorScroll = QScrollArea(self)
+        self.editorScroll.setWidgetResizable(True)
+        self.editorScroll.setFrameShape(QScrollArea.Shape.NoFrame)
+        self.editorScroll.setHorizontalScrollBarPolicy(
+            Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.editorScroll.setWidget(self.editorContent)
+        layout.insertWidget(2, self.editorScroll, 1)
 
         self.objType = None
         self.configMotor = None     # set while editing the motor config

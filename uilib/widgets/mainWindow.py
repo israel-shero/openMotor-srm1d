@@ -81,17 +81,7 @@ class Window(QMainWindow):
 
     def setupMotorEditor(self):
         self.ui.motorEditor.setPreferences(self.app.preferencesManager.preferences)
-        # The config screen can have many rows (shared + solver + igniter
-        # chamber sections); wrap the editor pane in a scroll area so the
-        # inputs aren't compacted off-screen.
-        from PyQt6.QtWidgets import QScrollArea
-        self._editorScroll = QScrollArea()
-        self._editorScroll.setWidgetResizable(True)
-        self._editorScroll.setFrameShape(QScrollArea.Shape.NoFrame)
-        self.ui.motorEditor.setMinimumHeight(0)
-        self._editorScroll.setWidget(self.ui.motorEditor)  # reparents out of layout
-        self.ui.verticalLayoutMotorEditor.insertWidget(0, self._editorScroll)
-        self._editorScroll.setMinimumHeight(300)
+        self.ui.motorEditor.setMinimumHeight(300)
         self.ui.pushButtonEditGrain.pressed.connect(self.editGrain)
         self.ui.motorEditor.changeApplied.connect(self.applyChange)
         # Per-motor solver-aware config + igniter (grain-table 'Config' row).
