@@ -13,8 +13,6 @@ class TabularEditor(QWidget):
         QWidget.__init__(self)
         self.ui = Ui_TabularEditor()
         self.ui.setupUi(self)
-        self.setMinimumSize(500, 430)
-        self.ui.stackedWidget.setMinimumHeight(380)
         self.preferences = None
         self.tabs = []
 

@@ -19,8 +19,6 @@ class PropertyEditor(QWidget):
         self.setLayout(QVBoxLayout())
         self.layout().setSpacing(0)
         self.layout().setContentsMargins(5, 5, 5, 5)
-        self.setMinimumHeight(34)
-        self.setMinimumWidth(180)
         self.prop = prop
 
         if self.preferences is not None:
