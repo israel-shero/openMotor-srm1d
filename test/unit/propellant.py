@@ -1,5 +1,6 @@
 import unittest
 import motorlib.propellant
+from uilib.defaults import DEFAULT_PROPELLANTS, SRM1D_REPOSITORY_PROPELLANTS
 from PyQt6.QtWidgets import QApplication, QWidget, QSizePolicy
 from uilib.widgets.propertyEditor import PropertyEditor
 
@@ -39,6 +40,27 @@ class TestPropellantEditorLayout(unittest.TestCase):
             editor.editor.sizePolicy().horizontalPolicy(),
             QSizePolicy.Policy.Expanding,
         )
+
+
+class TestRepositoryPropellantLibrary(unittest.TestCase):
+    def test_repository_propellants_are_available_as_defaults(self):
+        names = {prop['name'] for prop in DEFAULT_PROPELLANTS}
+        for prop in SRM1D_REPOSITORY_PROPELLANTS:
+            self.assertIn(prop['name'], names)
+            self.assertGreater(prop['density'], 0)
+            self.assertTrue(prop['tabs'])
+            for tab in prop['tabs']:
+                self.assertGreaterEqual(tab['maxPressure'], tab['minPressure'])
+                self.assertGreater(tab['a'], 0)
+                self.assertGreater(tab['k'], 1)
+                self.assertGreater(tab['t'], 0)
+                self.assertGreater(tab['m'], 0)
+
+    def test_repository_library_has_expected_characterized_entries(self):
+        names = {prop['name'] for prop in SRM1D_REPOSITORY_PROPELLANTS}
+        self.assertIn('Hasegawa A Prop', names)
+        self.assertIn('Chase - Energy', names)
+        self.assertIn('Risky Batman V3 Jan2024 (LHS-calibrated)', names)
 
 class TestPropellantMethods(unittest.TestCase):
     def test_proper_propellant_ranges(self):

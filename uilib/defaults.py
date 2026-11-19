@@ -208,4 +208,165 @@ KNSU_PROPS = {
             ]
 }
 
-DEFAULT_PROPELLANTS = [CL_PROPS, OW_PROPS, KNDX_PROPS, KNSB_PROPS, KNSU_PROPS, WL_PROPS, BT_PROPS]
+SRM1D_REPOSITORY_PROPELLANTS = [
+    {
+        'name': '84 Unsuppressed - CHARACTERIZED',
+        'density': 1699.5457728642882,
+        'transportVariant': 'frozen',
+        'tabs': [{
+            'minPressure': 0, 'maxPressure': 13790000.000000002,
+            'a': 1.5694834407944363e-05, 'n': 0.4,
+            'k': 1.19, 't': 3105.0, 'm': 24.98,
+            'mu': 9.125e-05, 'kThermalFrozen': 0.3654, 'cpFrozen': 2050.0,
+            'kThermalEffective': 0.6584, 'cpEffective': 2826.0,
+        }],
+    },
+    {
+        'name': 'Alex - Hairless Balless',
+        'density': 1743.8336105936507,
+        'transportVariant': 'frozen',
+        'tabs': [{
+            'minPressure': 0, 'maxPressure': 13790000.000000002,
+            'a': 0.00027796386499737217, 'n': 0.28,
+            'k': 1.213, 't': 2733.6, 'm': 27.027,
+            'mu': 8.382e-05, 'kThermalFrozen': 0.2713, 'cpFrozen': 1838.0,
+            'kThermalEffective': 0.2713, 'cpEffective': 1838.0,
+        }],
+    },
+    {
+        'name': 'Booska Super Pourable - Vibe Mix THERMO',
+        'density': 1646.95396556067,
+        'transportVariant': 'frozen',
+        'tabs': [{
+            'minPressure': 0, 'maxPressure': 13790000.000000002,
+            'a': 1.1333086102492701e-05, 'n': 0.405,
+            'k': 1.2106, 't': 2752.0, 'm': 23.55,
+            'mu': 8.319e-05, 'kThermalFrozen': 0.3386, 'cpFrozen': 2.049,
+            'kThermalEffective': 0.4499, 'cpEffective': 2.354,
+        }],
+    },
+    {
+        'name': 'Chase - Energy',
+        'density': 1862.8571744913124,
+        'transportVariant': 'frozen',
+        'tabs': [{
+            'minPressure': 0, 'maxPressure': 13790000.000000002,
+            'a': 1.075303334201942e-05, 'n': 0.412,
+            'k': 1.198, 't': 2977.0, 'm': 24.98,
+            'mu': 9.009e-05, 'kThermalFrozen': 0.346, 'cpFrozen': 2017.0,
+            'kThermalEffective': 0.5761, 'cpEffective': 2629.0,
+        }],
+    },
+    {
+        'name': 'Chase Red',
+        'density': 1622.6510146066823,
+        'transportVariant': 'frozen',
+        'tabs': [{
+            'minPressure': 0, 'maxPressure': 13790000.000000002,
+            'a': 1.293975943475869e-05, 'n': 0.39,
+            'k': 1.22209, 't': 2641.471, 'm': 24.01168,
+            'mu': 8.236e-05, 'kThermalFrozen': 0.2841, 'cpFrozen': 1881.0,
+            'kThermalEffective': 0.2841, 'cpEffective': 1881.0,
+        }],
+    },
+    {
+        'name': 'Hasegawa A Prop',
+        'density': 1700.0,
+        'transportVariant': 'frozen',
+        'tabs': [{
+            'minPressure': 0, 'maxPressure': 10000000.0,
+            'a': 4.821e-05, 'n': 0.3,
+            'k': 1.19, 't': 3041.0, 'm': 25.4,
+            'mu': 8.842e-05, 'kThermalFrozen': 0.3685, 'cpFrozen': 2060.0,
+            'kThermalEffective': 0.6517, 'cpEffective': 2764.0,
+        }],
+    },
+    {
+        'name': 'Hasegawa Propellant 1 (69AP/17HTPB/14Al)',
+        'density': 1700.0,
+        'transportVariant': 'frozen',
+        'tabs': [{
+            'minPressure': 0, 'maxPressure': 20000000.0,
+            'a': 4.821e-05, 'n': 0.3,
+            'k': 1.19, 't': 3041.0, 'm': 25.4,
+            'mu': 8.842e-05, 'kThermalFrozen': 0.3685, 'cpFrozen': 2060.0,
+            'kThermalEffective': 0.3685, 'cpEffective': 2060.0,
+        }],
+    },
+    {
+        'name': 'KSP v1 0.42ips',
+        'density': 1681.1746241761768,
+        'transportVariant': 'frozen',
+        'tabs': [{
+            'minPressure': 6895.000000000001, 'maxPressure': 13790000.000000002,
+            'a': 0.00016438807796402777, 'n': 0.265,
+            'k': 1.210129, 't': 2835.896, 'm': 24.54,
+            'mu': 8.998e-05, 'kThermalFrozen': 0.2892, 'cpFrozen': 1927.0,
+            'kThermalEffective': 0.2892, 'cpEffective': 1927.0,
+        }],
+    },
+    {
+        'name': 'RCS - 8522',
+        'density': 1716.153712012799,
+        'transportVariant': 'frozen',
+        'tabs': [{
+            'minPressure': 0, 'maxPressure': 13790000.000000002,
+            'a': 1.912458279795643e-05, 'n': 0.405,
+            'k': 1.216, 't': 3016.0, 'm': 25.278,
+            'mu': 8.389e-05, 'kThermalFrozen': 0.2506, 'cpFrozen': 1878.0,
+            'kThermalEffective': 0.2506, 'cpEffective': 1878.0,
+        }],
+    },
+    {
+        'name': 'RCS - Warp9',
+        'density': 1641.4179858444998,
+        'transportVariant': 'frozen',
+        'tabs': [{
+            'minPressure': 0, 'maxPressure': 20685000.000000004,
+            'a': 0.0002472181550396159, 'n': 0.287,
+            'k': 1.229, 't': 2780.64, 'm': 23.6686,
+            'mu': 7.401e-05, 'kThermalFrozen': 0.2383, 'cpFrozen': 1867.0,
+            'kThermalEffective': 0.2383, 'cpEffective': 1867.0,
+        }],
+    },
+    {
+        'name': 'Risky Batman V3 Jan2024',
+        'density': 1682.0520769611899,
+        'transportVariant': 'frozen',
+        'tabs': [{
+            'minPressure': 0, 'maxPressure': 13100500.000000002,
+            'a': 5.054532350783141e-06, 'n': 0.456,
+            'k': 1.19889, 't': 2883.66, 'm': 23.7923,
+            'mu': 8.604e-05, 'kThermalFrozen': 0.3455, 'cpFrozen': 2052.0,
+            'kThermalEffective': 0.5038, 'cpEffective': 2468.0,
+        }],
+    },
+    {
+        'name': 'Risky Batman V3 Jan2024 (LHS-calibrated)',
+        'density': 1682.0520769611899,
+        'transportVariant': 'frozen',
+        'tabs': [{
+            'minPressure': 0, 'maxPressure': 13100500.000000002,
+            'a': 4.6343518757893865e-06, 'n': 0.456,
+            'k': 1.19889, 't': 2883.66, 'm': 23.7923,
+            'mu': 8.604e-05, 'kThermalFrozen': 0.3455, 'cpFrozen': 2052.0,
+            'kThermalEffective': 0.3455, 'cpEffective': 2052.0,
+        }],
+    },
+    {
+        'name': 'Stormtrooper 2.1',
+        'density': 1832.0965031984122,
+        'transportVariant': 'frozen',
+        'tabs': [{
+            'minPressure': 0, 'maxPressure': 11032000.000000002,
+            'a': 6.919245093121588e-06, 'n': 0.427909,
+            'k': 1.239961, 't': 2202.0, 'm': 24.50103,
+            'mu': 7.285e-05, 'kThermalFrozen': 0.2898, 'cpFrozen': 1621.0,
+            'kThermalEffective': 0.2898, 'cpEffective': 1621.0,
+        }],
+    },
+]
+
+DEFAULT_PROPELLANTS = [
+    CL_PROPS, OW_PROPS, KNDX_PROPS, KNSB_PROPS, KNSU_PROPS, WL_PROPS, BT_PROPS,
+] + SRM1D_REPOSITORY_PROPELLANTS

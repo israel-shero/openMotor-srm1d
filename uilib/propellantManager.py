@@ -31,6 +31,12 @@ class PropellantManager(QObject):
                 newProp = motorlib.propellant.Propellant()
                 newProp.setProperties(propDict)
                 self.propellants.append(newProp)
+            existing_names = {prop.getProperty('name') for prop in self.propellants}
+            for prop in DEFAULT_PROPELLANTS:
+                if prop['name'] not in existing_names:
+                    self.propellants.append(motorlib.propellant.Propellant(prop))
+            if len(self.propellants) != len(propList):
+                self.savePropellants()
         except FileNotFoundError:
             logger.warn('No propellant file found, saving defaults')
             self.propellants = [motorlib.propellant.Propellant(prop) for prop in DEFAULT_PROPELLANTS]
