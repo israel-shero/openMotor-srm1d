@@ -10,6 +10,9 @@ from ..logger import logger
 
 class PropellantMenu(QDialog):
 
+    COMPACT_WIDTH = 980
+    COMPACT_HEIGHT = 680
+
     propellantEdited = pyqtSignal(dict)
     closed = pyqtSignal()
 
@@ -17,6 +20,7 @@ class PropellantMenu(QDialog):
         QDialog.__init__(self)
         self.ui = Ui_PropellantDialog()
         self.ui.setupUi(self)
+        self.setMinimumSize(600, 480)
 
         self.manager = manager
 
@@ -39,10 +43,38 @@ class PropellantMenu(QDialog):
         self.setupButtons()
 
         self.editingPropellant = False
+        self._applyResponsiveLayout()
 
     def show(self):
         self.setupButtons()
         super().show()
+
+    def resizeEvent(self, event):
+        super().resizeEvent(event)
+        self._applyResponsiveLayout()
+
+    def _applyResponsiveLayout(self):
+        if not hasattr(self, 'editingPropellant'):
+            return
+
+        compactWidth = self.width() < self.COMPACT_WIDTH
+        compactEditing = compactWidth and self.editingPropellant
+        leftWidgets = (
+            self.ui.listWidgetPropellants,
+            self.ui.pushButtonNewPropellant,
+            self.ui.pushButtonEdit,
+            self.ui.pushButtonDelete,
+            self.ui.line,
+        )
+        for widget in leftWidgets:
+            widget.setVisible(not compactEditing)
+
+        showPreview = (
+            self.editingPropellant
+            and not compactWidth
+            and self.height() >= self.COMPACT_HEIGHT
+        )
+        self.ui.propEditor.propellantPreview.setVisible(showPreview)
 
     def setupButtons(self):
         self.ui.pushButtonEdit.setEnabled(False)
@@ -81,6 +113,7 @@ class PropellantMenu(QDialog):
         self.ui.propEditor.loadProperties(prop)
         self.toggleButtons(True)
         self.editingPropellant = True
+        self._applyResponsiveLayout()
 
     def propEdited(self, propDict):
         # If the name they choose matches an existing propellant, don't apply that change
@@ -101,6 +134,7 @@ class PropellantMenu(QDialog):
     def editorClosed(self):
         self.editingPropellant = False
         self.toggleButtons(False)
+        self._applyResponsiveLayout()
 
     def toggleButtons(self, editing):
         self.ui.listWidgetPropellants.setEnabled(not editing)

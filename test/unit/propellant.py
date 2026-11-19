@@ -1,7 +1,10 @@
 import unittest
 import motorlib.propellant
 from uilib.defaults import DEFAULT_PROPELLANTS, SRM1D_REPOSITORY_PROPELLANTS
+from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import QApplication, QWidget, QSizePolicy
+from uilib.preferencesManager import Preferences
+from uilib.widgets.propellantMenu import PropellantMenu
 from uilib.widgets.propertyEditor import PropertyEditor
 
 
@@ -14,6 +17,7 @@ class TestPropellantEditorLayout(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.app = QApplication.instance() or QApplication([])
+        cls.app.icon = QIcon()
 
     def test_tabular_propellant_editor_keeps_controls_visible(self):
         propellant = motorlib.propellant.Propellant({
@@ -40,6 +44,73 @@ class TestPropellantEditorLayout(unittest.TestCase):
             editor.editor.sizePolicy().horizontalPolicy(),
             QSizePolicy.Policy.Expanding,
         )
+
+    def test_dialog_adapts_at_compact_and_standard_sizes(self):
+        class Manager:
+            propellants = [motorlib.propellant.Propellant({
+                'name': 'Layout Test',
+                'density': 1700,
+                'tabs': [{
+                    'minPressure': 0,
+                    'maxPressure': 7000000,
+                    'a': 1e-5,
+                    'n': 0.3,
+                    'k': 1.2,
+                    't': 2800,
+                    'm': 23.67,
+                }],
+            })]
+
+            def getNames(self):
+                return [prop.getProperty('name') for prop in self.propellants]
+
+            def savePropellants(self):
+                pass
+
+        menu = PropellantMenu(Manager())
+        menu.ui.propEditor.setPreferences(Preferences())
+        menu.ui.listWidgetPropellants.setCurrentRow(0)
+        menu.editProp()
+
+        menu.resize(850, 700)
+        menu.show()
+        self.app.processEvents()
+        self.assertEqual(menu.size().width(), 850)
+        self.assertFalse(menu.ui.listWidgetPropellants.isVisible())
+        self.assertFalse(menu.ui.propEditor.propellantPreview.isVisible())
+        self.assertGreater(menu.ui.propEditor.width(), 700)
+        self.assertIsNotNone(menu.ui.propEditor.scrollArea.widget())
+
+        menu.resize(700, 600)
+        self.app.processEvents()
+        self.assertEqual(menu.size().width(), 700)
+        self.assertGreater(
+            menu.ui.propEditor.scrollArea.verticalScrollBar().maximum(),
+            0,
+        )
+        self.assertEqual(
+            menu.ui.propEditor.scrollArea.horizontalScrollBar().maximum(),
+            0,
+        )
+
+        menu.resize(600, 500)
+        self.app.processEvents()
+        self.assertEqual(menu.size().width(), 600)
+        self.assertFalse(menu.ui.listWidgetPropellants.isVisible())
+        self.assertTrue(menu.ui.propEditor.applyButton.isVisible())
+        self.assertTrue(menu.ui.propEditor.cancelButton.isVisible())
+        self.assertEqual(
+            menu.ui.propEditor.scrollArea.horizontalScrollBar().maximum(),
+            0,
+        )
+
+        menu.resize(1100, 800)
+        self.app.processEvents()
+        self.assertTrue(menu.ui.listWidgetPropellants.isVisible())
+        self.assertTrue(menu.ui.propEditor.propellantPreview.isVisible())
+
+        menu.editingPropellant = False
+        menu.close()
 
 
 class TestRepositoryPropellantLibrary(unittest.TestCase):
