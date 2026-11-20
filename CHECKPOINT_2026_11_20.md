@@ -3,16 +3,16 @@
 ## Repository States (both clean, pushed to forks)
 
 ### srm_1d
-- **Branch**: `integration/openmotor-packaging` (9848f80)
+- **Branch**: `integration/openmotor-packaging` (ee367aa)
 - **Remote**: `ivans-vibes` → https://github.com/israel-shero/srm_1d_Ivans_vibes.git
 - **Upstream**: `origin` → https://github.com/eJar0k/srm_1d.git
-- **HEAD**: `9848f80 docs: document Zerox pressure transducer calibration and tail-off audit`
+- **HEAD**: `ee367aa docs: register audited Zerox transducer calibration and case windows`
 
 ### openMotor-compatible
-- **Branch**: `integration/srm1d-packaging` (47cd875)
+- **Branch**: `integration/srm1d-packaging` (eb3815a)
 - **Remote**: `fork` → https://github.com/israel-shero/openMotor-srm1d.git
 - **Upstream**: `origin` → https://github.com/eJar0k/openMotor.git
-- **HEAD**: `47cd875 checkpoint: add T06 common-state closure comparison results`
+- **HEAD**: `eb3815a checkpoint: add T05 spatial extension study results`
 
 ---
 
