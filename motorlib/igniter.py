@@ -35,9 +35,10 @@ def _populate(collection, values):
     String properties with no value are given ``''`` so editors can show them."""
     collection.setProperties({k: v for k, v in (values or {}).items()
                               if v is not None})
-    for prop in collection.props.values():
-        if isinstance(prop, StringProperty) and prop.value is None:
-            prop.value = ''
+    for name, prop in collection.props.items():
+        if isinstance(prop, StringProperty):
+            if name not in (values or {}) or values[name] is None:
+                prop.value = ''
     return collection
 
 
